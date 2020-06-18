@@ -128,6 +128,7 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
-dataset/AmazonReviews/Reviews.csv
+dataset/AmazonReviews/*.csv
+dataset/glove.6B.100d.txt
 .DS_Store
 .idea/
