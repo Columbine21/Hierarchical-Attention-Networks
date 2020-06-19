@@ -1,5 +1,5 @@
 """
-@author: Viet Nguyen <nhviet1009@gmail.com>
+@author: Jason Yuan <1564123490@qq.com>
 """
 import torch
 import torch.nn as nn
@@ -26,8 +26,8 @@ class HierAttNet(nn.Module):
             batch_size = last_batch_size
         else:
             batch_size = self.batch_size
-        self.word_hidden_state = torch.zeros(2, batch_size, self.word_hidden_size)
-        self.sent_hidden_state = torch.zeros(2, batch_size, self.sent_hidden_size)
+        self.word_hidden_state = torch.zeros(2, batch_size, self.word_hidden_size, dtype=torch.float32)
+        self.sent_hidden_state = torch.zeros(2, batch_size, self.sent_hidden_size, dtype=torch.float32)
         if torch.cuda.is_available():
             self.word_hidden_state = self.word_hidden_state.cuda()
             self.sent_hidden_state = self.sent_hidden_state.cuda()

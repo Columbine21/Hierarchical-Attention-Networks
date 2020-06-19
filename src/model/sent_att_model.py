@@ -1,5 +1,5 @@
 """
-@author: Viet Nguyen <nhviet1009@gmail.com>
+@author: Jason Yuan <1564123490@qq.com>
 """
 import torch
 import torch.nn as nn
@@ -11,10 +11,9 @@ class SentAttNet(nn.Module):
     def __init__(self, sent_hidden_size=50, word_hidden_size=50, num_classes=14):
         super(SentAttNet, self).__init__()
 
-        self.sent_weight = nn.Parameter(torch.zeros(2 * sent_hidden_size, 2 * sent_hidden_size), requires_grad=True)
-        self.sent_bias = nn.Parameter(torch.zeros(1, 2 * sent_hidden_size), requires_grad=True)
-        self.context_weight = nn.Parameter(torch.zeros(2 * sent_hidden_size, 1), requires_grad=True)
-
+        self.sent_weight = nn.Parameter(torch.Tensor(2 * sent_hidden_size, 2 * sent_hidden_size))
+        self.sent_bias = nn.Parameter(torch.Tensor(1, 2 * sent_hidden_size))
+        self.context_weight = nn.Parameter(torch.Tensor(2 * sent_hidden_size, 1))
         self.gru = nn.GRU(2 * word_hidden_size, sent_hidden_size, bidirectional=True)
         self.fc = nn.Linear(2 * sent_hidden_size, num_classes)
 
@@ -25,12 +24,9 @@ class SentAttNet(nn.Module):
         self.context_weight.data.normal_(mean, std)
 
     def forward(self, input, hidden_state):
-
         f_output, h_output = self.gru(input, hidden_state)
         output = matrix_mul(f_output, self.sent_weight, self.sent_bias)
         output = matrix_mul(output, self.context_weight).permute(1, 0)
-        # print("sentence >>>>>>>>>>>>>>")
-        # print(output.shape)
         output = F.softmax(output, dim=1)
         output = element_wise_mul(f_output, output.permute(1, 0)).squeeze(0)
         output = self.fc(output)
