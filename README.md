@@ -15,3 +15,14 @@ Here is the link of the original paper(https://www.cs.cmu.edu/~diyiy/docs/naacl1
 
 <img src="./asset/model.png" style="zoom:50%;" />
 
+## Result on CPU
+
+Thanks to poutyne lib, I have saved lots of time on train codes & logics.
+
+Now, I test the code on my own computer, It goes well for 2000 iterators. I will test it further when gpu is available.
+
+-   Still, there is lots of things to do for a more perfect model. 
+    -   First Attention on padding item can be set to 0
+    -   Second We should to do something with original dataset, since the Reviews are skewed towards positive.
+    -   Last but not Least, Use typing to make our code readable for others.
+
